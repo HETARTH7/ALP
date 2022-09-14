@@ -1,18 +1,19 @@
 .model small
 .stack 64h
 .data
-array db 53h, 02h,15h,52h
+array dw 0053h,0002h,0015h,0052h
 .code
-start:MOV CX,04h
+start:MOV CL,04h
         MOV AX,@data
         MOV DS,AX
         LEA SI,array
-        MOV AL,[SI]
-BACK:INC SI
-        CMP AL,[SI]
-        JNC NEXT
-        MOV AL,[SI]
-NEXT:LOOP BACK
+        MOV AX,[SI]
+BACK:add SI,2
+        MOV BX,[SI]
+        CMP BX,AX
+        jl NEXT
+        MOV AX,BX
+NEXT:DEC CL
+        JNZ BACK
 HLT
 end
-
